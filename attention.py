@@ -21,10 +21,10 @@ class MultiHeadAttention(nn.Module):
     def __init__(self, d_model=512, d_k=64, d_v=64, h=8):
         super().__init__()
         self.Attention = Attention()
-        self.W_Q = nn.Linear(d_model, h*d_k)
-        self.W_K = nn.Linear(d_model, h*d_k)
-        self.W_V = nn.Linear(d_model, h*d_v)
-        self.W_O = nn.Linear(h*d_v, d_model)
+        self.W_Q = nn.Linear(d_model, h*d_k, bias=False)
+        self.W_K = nn.Linear(d_model, h*d_k, bias=False)
+        self.W_V = nn.Linear(d_model, h*d_v, bias=False)
+        self.W_O = nn.Linear(h*d_v, d_model, bias=False)
 
     def forward(self, Q, K, V):
         return self.W_O(self.Attention(self.W_Q(Q), self.W_K(K), self.W_V(V)))
